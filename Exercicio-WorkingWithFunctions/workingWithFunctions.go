@@ -24,13 +24,13 @@ func main(){
 	taxRate = UserInput("Tax Rate: ")
 
 	//Earnings before taxes
-	ebt := revenue - expenses
+	//ebt := revenue - expenses
 
 	//earnings after taxes = profit
-	profit := ebt * (1 -taxRate/100)
+	//profit := ebt * (1 -taxRate/100)
 
 	//Ratio
-	ratio := ebt/profit
+	//ratio := ebt/profit
 
 	//concatenacao de string com var, e delimitacao de casas decimais
 	fmt.Printf("Total de arrecadacao:  %.2f\n", ebt)
@@ -47,4 +47,8 @@ func UserInput(infoText string) (float64) {
 	fmt.Print(infoText)
 	fmt.Scan(&userInput)
 	return userInput
+}
+
+func calculosFinanceiros() {
+
 }
