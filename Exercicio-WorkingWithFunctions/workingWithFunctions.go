@@ -5,8 +5,8 @@ import (
 	//"math"
 )
 
-func main(){
-	
+func main() {
+
 	var revenue float64
 	var expenses float64
 	var taxRate float64
@@ -30,7 +30,11 @@ func main(){
 	//profit := ebt * (1 -taxRate/100)
 
 	//Ratio
-	//ratio := ebt/profit
+	//ratio := ebt/profit    tudo acima incluido na funcao calculoFinanceiros
+
+	ebt, profit, ratio := calculosFinanceiros(revenue, expenses, taxRate)
+
+
 
 	//concatenacao de string com var, e delimitacao de casas decimais
 	fmt.Printf("Total de arrecadacao:  %.2f\n", ebt)
@@ -42,13 +46,16 @@ func main(){
 	fmt.Printf("Razao arrecadacao/lucro: %.2f\n", ratio)
 }
 
-func UserInput(infoText string) (float64) {
+func UserInput(infoText string) float64 {
 	var userInput float64
 	fmt.Print(infoText)
 	fmt.Scan(&userInput)
 	return userInput
 }
 
-func calculosFinanceiros() {
-
+func calculosFinanceiros(revenue, expenses, taxRate float64) (float64, float64, float64) {
+	ebt := revenue - expenses
+	profit := ebt * (1 - taxRate/100)
+	ratio := ebt / profit
+	return ebt, profit, ratio
 }
