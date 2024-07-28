@@ -28,6 +28,12 @@ func main () {
 		fmt.Println("Digie o valor a ser depositado: ")
 		var deposito float64
 		fmt.Scan(&deposito)
+
+		if deposito<=0 {
+			fmt.Println("Deposito deve ser maior que 0")
+			return
+		}
+
 		saldo = deposito + saldo
 		fmt.Println("Valor depositado")
 		fmt.Println("Seu saldo é ", saldo)
@@ -35,9 +41,22 @@ func main () {
 		fmt.Println("Digite o valor do saque")
 		var saque float64
 		fmt.Scan(&saque)
+
+		if saque <= 0 {
+			fmt.Println("Saque deve ser maior que 0")
+			return
+		}
+
+		if saque > saldo {
+			fmt.Println("Valor maior que o saldo da conta")
+			return
+		}
+		
 		saldo = saldo - saque
 		fmt.Println("Valor sacado")
 		fmt.Println("Seu saldo é ", saldo)
+	} else {
+		fmt.Println("Sistema encerrado")
 	}
 
 }
