@@ -3,12 +3,28 @@ package main
 import (
 	"fmt"
 	//"math"
+	"os"
+	"strconv"
 )
+
+const arquivoSaldo = "saldo.txt"
+
+func lerSaldoEmArquivo() float64{
+	data, _ := os.ReadFile(arquivoSaldo)
+	saldoTexto := string(data)
+	saldo, _ := strconv.ParseFloat(saldoTexto,64)
+	return saldo
+}
+
+func gravarSaldoEmArquivo(saldo float64) {
+	saldoTexto := fmt.Sprint(saldo) //fmt.Sprint passa o parametro em uma String
+	os.WriteFile(arquivoSaldo,[]byte(saldoTexto), 0644) //[]byte converte o parametro em uma collection de bytes 
+}
 
 
 func main () {
 
-	var saldo float64
+	var saldoConta float64 = lerSaldoEmArquivo()
 
 	fmt.Println("Bem vindo ao sistema bancario!")
 
@@ -24,7 +40,7 @@ func main () {
 		fmt.Scan(&opcao)
 
 		if opcao == 1 {
-			fmt.Println("Seu saldo é R$ ", saldo)
+			fmt.Println("Seu saldo é R$ ", saldoConta)
 
 		} else if opcao == 2 {
 			fmt.Println("Digie o valor a ser depositado: ")
@@ -36,9 +52,10 @@ func main () {
 				continue
 			}
 
-			saldo = deposito + saldo
+			saldoConta = deposito + saldoConta
+			gravarSaldoEmArquivo(saldoConta)
 			fmt.Println("Valor depositado")
-			fmt.Println("Seu saldo é ", saldo)
+			fmt.Println("Seu saldo é ", saldoConta)
 		} else if opcao == 3 {
 			fmt.Println("Digite o valor do saque")
 			var saque float64
@@ -49,14 +66,15 @@ func main () {
 				continue
 			}
 
-			if saque > saldo {
+			if saque > saldoConta {
 				fmt.Println("Valor maior que o saldo da conta")
 				continue
 			}
 			
-			saldo = saldo - saque
+			saldoConta = saldoConta - saque
+			gravarSaldoEmArquivo(saldoConta)
 			fmt.Println("Valor sacado")
-			fmt.Println("Seu saldo é ", saldo)
+			fmt.Println("Seu saldo é ", saldoConta)
 		} else {
 			fmt.Println("Sistema encerrado")
 			break
