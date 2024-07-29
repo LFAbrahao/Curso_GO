@@ -5,15 +5,26 @@ import (
 	//"math"
 	"os"
 	"strconv"
+	"errors"
 )
 
 const arquivoSaldo = "saldo.txt"
 
-func lerSaldoEmArquivo() float64{
-	data, _ := os.ReadFile(arquivoSaldo)
+func lerSaldoEmArquivo() (float64, error){
+	data, err := os.ReadFile(arquivoSaldo)
+
+	if err != nil{
+		return 1000, errors.New("Nao foi possivel ler arquivo de Saldo")
+	}
+
 	saldoTexto := string(data)
-	saldo, _ := strconv.ParseFloat(saldoTexto,64)
-	return saldo
+	saldo, err := strconv.ParseFloat(saldoTexto,64)
+
+	if err != nil {
+		return 1000, errors.New("Erro no parse do valor")
+	}
+
+	return saldo, nil
 }
 
 func gravarSaldoEmArquivo(saldo float64) {
@@ -24,7 +35,13 @@ func gravarSaldoEmArquivo(saldo float64) {
 
 func main () {
 
-	var saldoConta float64 = lerSaldoEmArquivo()
+	var saldoConta, err = lerSaldoEmArquivo()
+
+	if err != nil{
+		fmt.Println("Error")
+		fmt.Println(err)
+		fmt.Println("---------")
+	}
 
 	fmt.Println("Bem vindo ao sistema bancario!")
 
